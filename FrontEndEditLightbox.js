@@ -17,7 +17,7 @@ function initFEEL($) {
         closeOnSave: true,
         fixedSaveButton: true,
         enableTemplateEdit: false,
-        selectorsToHide: '#_ProcessPageEditChildren, #_ProcessPageEditDelete, #_ProcessPageEditSettings, #_WireTabDelete',
+        selectorsToHide: '#_ProcessPageEditChildren, #_ProcessPageEditDelete, #_ProcessPageEditRestore, #_ProcessPageEditSettings, #_WireTabDelete',
         fieldHighlightStyle: 'outline: 2px solid #89ADE2; outline-offset: -1px; z-index: 200; position: relative;',
         closeConfirmMessage: 'Are you sure you want to close the editor?',
         skipLoadingStyles: false,
@@ -438,8 +438,6 @@ function _loadAsset(path, callback, o) {
 jQuery(document).ready(function ($) {
     if (!$.magnificPopup) {
         _loadAsset(wireModules + "Jquery/JqueryMagnific/JqueryMagnific.js", function () {
-            // console.log('FEEL: JqueryMagnific.js reloaded');
-            // alert('FEEL: JqueryMagnific.js reloaded');
             _loadAsset(wireModules + "Jquery/JqueryMagnific/JqueryMagnific.css");
             initFEEL($);
         });

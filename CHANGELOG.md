@@ -1,6 +1,11 @@
 # Changelog
 
 
+### 1.4.1 (2023-02-19)
+
+- allow user editing (by matjazp)
+
+
 ### 1.4.0 (2018-06-21)
 
 - asset loading improvements (by matjazp)

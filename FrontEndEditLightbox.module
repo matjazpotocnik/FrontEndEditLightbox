@@ -25,7 +25,7 @@ class FrontEndEditLightbox extends WireData implements Module, ConfigurableModul
     {
         return array(
             'title'     => 'Front-End Edit Lightbox',
-            'version'   => '1.4.0',
+            'version'   => '1.4.1',
             'summary'   => 'Edit pages on the frontend using lightboxed admin.',
             'author'    => 'Roland Toth',
             'href'      => 'https://github.com/rolandtoth/FrontEndEditLightbox',
@@ -53,6 +53,7 @@ class FrontEndEditLightbox extends WireData implements Module, ConfigurableModul
         'enableTemplateEdit'       => false,
         'selectorsToHide'          => '#_ProcessPageEditChildren, #ProcessPageEditChildren, ' .
             '#_ProcessPageEditDelete, #ProcessPageEditDelete, ' .
+            '#_ProcessPageEditRestore, #ProcessPageEditRestore, ' .
             '#_ProcessPageEditSettings, ' .
             '#_WireTabDelete, #WireTabDelete',
         'selectorsToHideSuperUser' => '#_ProcessPageEditChildren, #ProcessPageEditChildren',
@@ -289,9 +290,18 @@ class FrontEndEditLightbox extends WireData implements Module, ConfigurableModul
      */
     private function _isPageAllowed($page)
     {
-        return ($page instanceof Page && $page->editable() && $page->template != 'admin' && $this->wire('user')->isLoggedin());
-    }
+        //return ($page instanceof Page && $page->editable() && $page->template != 'admin' && $this->wire('user')->isLoggedin());
 
+        //https://github.com/processwire/processwire-issues/issues/1322
+        if ($page instanceof User) {
+            $proc = $this->wire('process');
+            $this->wire('process', $this->wire('user')->id === $page->id ? 'ProcessProfile' : 'ProcessUser');
+            $editable = $page->editable();
+            $this->wire('process', $proc);
+            return $editable;
+        }
+        return $page->editable();
+    }
 
     /**
      * Check if page template is not disabled
